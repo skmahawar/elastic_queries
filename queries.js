@@ -621,3 +621,65 @@ POST /hngre/merchants/_search
         }
     }
 }
+
+POST /hngre/merchants/_search
+{
+    "size": 7,
+    "sort": {
+      "_script": {
+        "script_file": "random",
+        "type": "number",
+        "params": {},
+        "order": "asc"
+      }
+    },
+    "filter": {
+      "bool": {
+        "must": [
+          {
+            "query": {
+              "query_string": {
+                "default_field": "address.country",
+                "query": "United States",
+                "default_operator": "AND"
+              }
+            }
+          },
+          {
+            "query": {
+              "query_string": {
+                "default_field": "address.region",
+                "query": "New York",
+                "default_operator": "AND"
+              }
+            }
+          },
+          {
+            "query": {
+              "query_string": {
+                "default_field": "address.locality",
+                "query": "New York",
+                "default_operator": "AND"
+              }
+            }
+          },
+          {
+            "terms": {
+              "available_veg_type": [
+                3,
+                1,
+                2
+              ]
+            }
+          }
+        ],
+        "must_not": [
+          {
+            "ids": {
+              "values": []
+            }
+          }
+        ]
+      }
+    }
+  }
