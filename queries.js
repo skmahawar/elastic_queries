@@ -460,11 +460,26 @@ POST /test/restro/_search
            "nested": {
              "path": "dishes",
              "query": {
-               "query_string": {
-                 "default_field": "dishes.name",
-                 "query": "aloo samosa",
-                 "default_operator": "AND"
-               }
+                "bool": {
+                  "must": [
+                    {
+                      "query_string": {
+                        "default_field": "dishes.cuisine",
+                        "query": "chinese",
+                        "default_operator": "AND"
+                      }
+                    }
+                  ],
+                  "must_not": [
+                    {
+                      "terms": {
+                        "dishes._id": [
+                          "553e05b3acbf94330cfc79ee"
+                        ]
+                      }
+                    }
+                  ]
+                }
              },
              "inner_hits": {}
            }
@@ -573,3 +588,36 @@ POST /test/restro/_search
     "from": 0
   }
 
+POST /hngre/merchants/_search
+{
+    "size": 5,
+    "query": {
+        "nested": {
+           "path": "dishes",
+           "query": {
+               "match": {
+                   "dishes.name":"Seafood Antonio"
+               }
+           },
+           "inner_hits":{}
+        }
+    }
+}
+
+POST /hngre/merchants/_search
+{
+    "size": 5,
+    "query": {
+        "nested": {
+           "path": "dishes",
+           "query": {
+               "query_string": {
+                  "default_field": "dishes.name",
+                  "query": "Seafood Antonio",
+                  "default_operator": "AND"
+               }
+           },
+           "inner_hits":{}
+        }
+    }
+}
