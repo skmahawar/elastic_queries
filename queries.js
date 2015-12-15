@@ -1,4 +1,4 @@
-POST /hngre/merchants/_search
+POST /test/restro/_search
 {
   "query": {
     "filtered": {
@@ -30,7 +30,7 @@ POST /hngre/merchants/_search
     }
   }
 }
-POST /hngre/merchants/_search
+POST /test/restro/_search
 {
   "filter": {
     "bool": {
@@ -74,7 +74,7 @@ POST /hngre/merchants/_search
     }
   }
 }
-POST /hngre/merchants/_search
+POST /test/restro/_search
 {
   "filter": {
     "bool": {
@@ -118,7 +118,7 @@ POST /hngre/merchants/_search
     }
   }
 }
-POST /hngre/merchants/_search
+POST /test/restro/_search
 {
     "size": 7,
     "sort": {
@@ -145,7 +145,7 @@ POST /hngre/merchants/_search
       }
     }
   }
-POST /hngre/merchants/_search
+POST /test/restro/_search
 {
     "query": {
         "bool": {
@@ -163,7 +163,7 @@ POST /hngre/merchants/_search
         }
     }
 }
-POST /hngre/merchants/_search
+POST /test/restro/_search
 {
     "query": {
       "filtered": {
@@ -218,7 +218,7 @@ POST /hngre/merchants/_search
       }
     }
 }
-POST /hngre/merchants/_search
+POST /test/restro/_search
 {
     "size": 7,
     "sort": {
@@ -285,9 +285,9 @@ POST /hngre/merchants/_search
       }
     }
   }
-GET /hngre/merchants/_mapping
+GET /test/restro/_mapping
 GET /_status
-POST /hngre/merchants/_search
+POST /test/restro/_search
 {
     "query": {
       "filtered": {
@@ -343,7 +343,7 @@ POST /hngre/merchants/_search
     },
     "from": 0
   }
-POST /hngre/merchants/_search
+POST /test/restro/_search
 {
     "query": {
       "filtered": {
@@ -398,7 +398,7 @@ POST /hngre/merchants/_search
     "from": 4
   }
 GET /autocomplete/suggest/_mapping
-POST /hngre/merchants/_search
+POST /test/restro/_search
 {
     "query": {
       "filtered": {
@@ -452,7 +452,7 @@ POST /hngre/merchants/_search
     },
     "from": 0
   }
-POST /hngre/merchants/_search
+POST /test/restro/_search
 {
      "query": {
        "filtered": {
@@ -516,7 +516,7 @@ POST /hngre/merchants/_search
      },
      "from": 2
    }
-POST /hngre/merchants/_search
+POST /test/restro/_search
  {
     "query": {
       "filtered": {
