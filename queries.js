@@ -532,7 +532,7 @@ POST /test/restro/_search
      "from": 2
    }
 POST /test/restro/_search
- {
+{
     "query": {
       "filtered": {
         "query": {
@@ -586,7 +586,7 @@ POST /test/restro/_search
       }
     },
     "from": 0
-  }
+}
 
 POST /hngre/merchants/_search
 {
