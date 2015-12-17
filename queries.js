@@ -530,7 +530,7 @@ POST /test/restro/_search
        }
      },
      "from": 2
-   }
+}
 POST /test/restro/_search
 {
     "query": {
@@ -588,7 +588,7 @@ POST /test/restro/_search
     "from": 0
 }
 
-POST /hngre/merchants/_search
+POST /test/restro/_search
 {
     "size": 5,
     "query": {
@@ -604,7 +604,7 @@ POST /hngre/merchants/_search
     }
 }
 
-POST /hngre/merchants/_search
+POST /test/restro/_search
 {
     "size": 5,
     "query": {
@@ -622,7 +622,7 @@ POST /hngre/merchants/_search
     }
 }
 
-POST /hngre/merchants/_search
+POST /test/restro/_search
 {
     "size": 7,
     "sort": {
@@ -682,4 +682,246 @@ POST /hngre/merchants/_search
         ]
       }
     }
-  }
+}
+
+POST /test/restro/_search
+{
+    "size": 7,
+    "sort": {
+      "_script": {
+        "script_file": "random",
+        "type": "number",
+        "params": {},
+        "order": "asc"
+      }
+    },
+    "filter": {
+      "bool": {
+        "must": [
+          {
+            "query": {
+              "query_string": {
+                "default_field": "address.country",
+                "query": "United States",
+                "default_operator": "AND"
+              }
+            }
+          },
+          {
+            "query": {
+              "query_string": {
+                "default_field": "address.region",
+                "query": "New York",
+                "default_operator": "AND"
+              }
+            }
+          },
+          {
+            "query": {
+              "query_string": {
+                "default_field": "address.locality",
+                "query": "New York",
+                "default_operator": "AND"
+              }
+            }
+          },
+          {
+            "query": {
+                "filtered": {
+                   "filter": {
+                        "terms": {
+                           "available_veg_type": [ 3, 1 ],
+                           "execution": "and",
+                           "_cache": true
+                        }   
+                   }
+                }
+            }
+          }
+        ],
+        "must_not": [
+          {
+            "ids": {
+              "values": []
+            }
+          }
+        ]
+      }
+    }
+}
+
+POST /test/restro/_search
+{
+    "size": 7,
+    "query": {
+      "filtered": {
+        "query": {
+          "nested": {
+            "path": "dishes",
+            "query": {
+              "bool": {
+                "must": [
+                  {
+                    "query_string": {
+                      "default_field": "dishes.ingredients",
+                      "query": "pasta",
+                      "default_operator": "AND"
+                    }
+                  }
+                ],
+                "must_not": [
+                  {
+                    "terms": {
+                      "dishes._id": []
+                    }
+                  }
+                ]
+              }
+            },
+            "inner_hits": {
+              "size": 100
+            }
+          }
+        },
+        "filter": {
+          "bool": {
+            "must": [
+              {
+                "query": {
+                  "query_string": {
+                    "default_field": "address.country",
+                    "query": "United States",
+                    "default_operator": "AND"
+                  }
+                }
+              },
+              {
+                "query": {
+                  "query_string": {
+                    "default_field": "address.region",
+                    "query": "New York",
+                    "default_operator": "AND"
+                  }
+                }
+              },
+              {
+                "query": {
+                  "query_string": {
+                    "default_field": "address.locality",
+                    "query": "New York",
+                    "default_operator": "AND"
+                  }
+                }
+              },
+              {
+                "terms": {
+                  "available_veg_type": [
+                    1
+                  ],
+                  "execution": "and",
+                  "_cache": true
+                }
+              }
+            ]
+          }
+        }
+      }
+    },
+    "from": 0
+}
+
+POST /test/restro/_search
+{
+    "size": 7,
+    "query": {
+      "filtered": {
+        "query": {
+          "nested": {
+            "path": "dishes",
+            "query": {
+              "bool": {
+                "must": [{
+                      "filtered": {
+                          "query": {
+                            "query_string": {
+                              "default_field": "dishes.cuisine",
+                              "query": "burgers",
+                              "default_operator": "AND"
+                            }
+                          }, 
+                         "filter": {
+                             "terms": {
+                                "veg_type": [1,2],
+                                "execution": "or",
+                                "_cache": true
+                             }
+                         }
+                      }
+                  }],
+                "must_not": [
+                  {
+                    "terms": {
+                      "dishes._id": [ ]
+                    }
+                  }
+                ]
+              }
+            },
+            "inner_hits": {
+              "size": 100
+            }
+          }
+        },
+        "filter": {
+          "bool": {
+            "must": [
+              {
+                "query": {
+                  "query_string": {
+                    "default_field": "address.country",
+                    "query": "United States",
+                    "default_operator": "AND"
+                  }
+                }
+              },
+              {
+                "query": {
+                  "query_string": {
+                    "default_field": "address.region",
+                    "query": "New York",
+                    "default_operator": "AND"
+                  }
+                }
+              },
+              {
+                "query": {
+                  "query_string": {
+                    "default_field": "address.locality",
+                    "query": "New York",
+                    "default_operator": "AND"
+                  }
+                }
+              },
+              {
+                "terms": {
+                  "available_veg_type": [
+                    1,2
+                  ],
+                  "execution": "and",
+                  "_cache": true
+                }
+              }
+            ],
+            "must_not": [
+              {
+                "ids": {
+                  "values": [ ]
+                }
+              }
+            ]
+          }
+        }
+      }
+    },
+    "from": 0
+}
